@@ -10,14 +10,17 @@ import UIKit
 class SearchViewController: UIViewController {
     
     static var searchView: UIView?
+    public var isUpstairs = true
     
-    public let miniView: UIView = {
+    //MARK:- miniView
+    internal let miniView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = UIColor(named: "tabBarSelected")
         return view
     }()
     
+    //MARK:- searchLabel
     private let searchLabel: UILabel = {
         let label = UILabel()
         label.text = "Поиск товаров"
@@ -28,7 +31,8 @@ class SearchViewController: UIViewController {
         return label
     }()
     
-    private let searchButton: UIButton = {
+    //MARK:- searchButton
+    internal let searchButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .white
@@ -39,6 +43,7 @@ class SearchViewController: UIViewController {
         return button
     }()
     
+    //MARK:- magnifyingglass
     private let magnifyingglassButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = UIColor(named: "tabBarSelected")
@@ -48,7 +53,8 @@ class SearchViewController: UIViewController {
         return button
     }()
     
-    private let scanButton: UIButton = {
+    //MARK:- scan
+    internal let scanButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .white
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -56,7 +62,8 @@ class SearchViewController: UIViewController {
         return button
     }()
     
-    public let tableView: UITableView = {
+    //MARK:- tableView
+    internal let tableView: UITableView = {
         let tableView = UITableView()
         tableView.showsVerticalScrollIndicator = false
         tableView.register(CustomCellTableView.self, forCellReuseIdentifier: "identifierCell")
@@ -65,8 +72,7 @@ class SearchViewController: UIViewController {
         return tableView
     }()
 
-
-    
+    //  MARK:- viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         SearchViewController.searchView = view
@@ -80,6 +86,7 @@ class SearchViewController: UIViewController {
         setupConstraints()
     }
     
+    //  MARK:- viewDidLayoutSubviews
     override func viewDidLayoutSubviews() {
         searchButton.layer.cornerRadius = 5
         magnifyingglassButton.layer.cornerRadius = 5
@@ -103,6 +110,7 @@ class SearchViewController: UIViewController {
         view.addSubview(tableView)
     }
     
+    //  MARK:- Constraints
     private func setupConstraints() {
         
         NSLayoutConstraint.activate([

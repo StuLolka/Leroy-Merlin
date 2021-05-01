@@ -17,7 +17,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UICo
         1
     }
     
-    
+    //  MARK:- Sections
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 5))
         
@@ -37,7 +37,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UICo
         return headerView
     }
     
-    
+    //  MARK:- Cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "identifierCell", for: indexPath) as? CustomCellTableView else { return UITableViewCell()}
         let data = DataTableView()
@@ -56,20 +56,42 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UICo
         }
         return cell
     }
-      
+    
+    //  MARK:- Animation, scroll
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         
-        if targetContentOffset.pointee.y < 20 {
-            miniView.frame.origin.y = 0
-            tableView.frame.origin.y = miniView.frame.height
-            navigationController?.navigationBar.isHidden = true
-        }
-        else {
+        if targetContentOffset.pointee.y < 20 && !isUpstairs{
+            miniView.isHidden = false
             
-            miniView.frame.origin.y = -(miniView.frame.height)
-            tableView.frame.origin.y = 0
+            UIView.animate(withDuration: 0.3) {
+                self.searchButton.frame.origin.x = 20
+                self.searchButton.center.y = self.scanButton.center.y
+                self.miniView.backgroundColor = UIColor(named: "tabBarSelected")
+            }
+            
+            animationTableView(view: tableView, newPosition: CGPoint(x: tableView.center.x, y: tableView.center.y + miniView.frame.height), duration: 0.3)
+            navigationController?.navigationBar.isHidden = true
+            isUpstairs = true
+        }
+        else if targetContentOffset.pointee.y >= 20 && isUpstairs {
+            UIView.animate(withDuration: 0.3) {
+                self.searchButton.frame.origin.x = 0
+                self.searchButton.frame.origin.y = 0
+                self.miniView.backgroundColor = .white
+            }
+            animationTableView(view: tableView, newPosition: CGPoint(x: tableView.center.x, y: tableView.center.y - miniView.frame.height), duration: 0.3)
             navigationController?.navigationBar.isHidden = false
+            isUpstairs = false
         }
     }
     
+    private func animationTableView(view: UIView, newPosition: CGPoint, duration: CFTimeInterval) {
+        let animationMove = CABasicAnimation(keyPath: #keyPath(CALayer.position))
+        animationMove.fromValue = view.layer.position
+        animationMove.toValue = newPosition
+        animationMove.duration = duration
+        view.layer.add(animationMove, forKey: "animationMove")
+        view.layer.position = newPosition
+    }
 }
+

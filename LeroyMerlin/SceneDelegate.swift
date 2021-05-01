@@ -14,6 +14,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
+        let windowScene = scene
+        let window = UIWindow(windowScene: windowScene)
+        self.window = window
         
         let searchVC = SearchViewController()
         let listVC = ListViewController()
@@ -33,14 +36,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         profileNC.tabBarItem = UITabBarItem(title: "Профиль", image: UIImage(systemName: "person"), tag: 3)
         cartNC.tabBarItem = UITabBarItem(title: "Корзина", image: UIImage(systemName: "cart"), tag: 4)
         
-        window?.overrideUserInterfaceStyle = .light
+
+        window.overrideUserInterfaceStyle = .light
         
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor(named: "tabBarSelected") ?? .green], for:.selected)
         UITabBar.appearance().tintColor = UIColor(named: "tabBarSelected")
         
         let tapBarVC = UITabBarController()
         tapBarVC.setViewControllers([searchNC, listNC, shopsNC, profileNC, cartNC], animated: true)
-        window?.windowScene = scene
+        window.windowScene = scene
         self.window?.rootViewController = tapBarVC
         self.window?.makeKeyAndVisible()
     }

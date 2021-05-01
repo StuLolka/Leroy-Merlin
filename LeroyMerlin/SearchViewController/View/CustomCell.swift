@@ -55,6 +55,7 @@ final class CustomCell: UICollectionViewCell {
         addConstraints()
     }
     
+    //  MARK:- Constraints for imageView
     public func addConstrainsImageView() {
         addSubview(imageView)
         NSLayoutConstraint.deactivate([
@@ -71,6 +72,7 @@ final class CustomCell: UICollectionViewCell {
         ])
     }
     
+    //  MARK:- Constraints for catalog's imageView
     public func addConstrainsImageViewForCatalog() {
         addSubview(imageView)
         NSLayoutConstraint.activate([
@@ -81,6 +83,7 @@ final class CustomCell: UICollectionViewCell {
         ])
     }
     
+    //  MARK:- Others constraints
     private func addConstraints() {
         NSLayoutConstraint.activate([
             

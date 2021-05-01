@@ -8,10 +8,8 @@
 import UIKit
 
 extension CustomCellTableView: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    
-    public override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
-        return CGSize(width: 200, height: 200)
-    }
+        
+    //  MARK:- Number
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 
         let data = DataTableView()
@@ -30,6 +28,7 @@ extension CustomCellTableView: UICollectionViewDataSource, UICollectionViewDeleg
         }
     }
     
+    //  MARK:- Cell
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "identifierCellCollection", for: indexPath) as? CustomCell else {
@@ -50,6 +49,7 @@ extension CustomCellTableView: UICollectionViewDataSource, UICollectionViewDeleg
         
     }
     
+    //  MARK:- Size
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let view = SearchViewController.searchView else {return CGSize(width: 170, height: 215)}
         return CGSize(width: view.frame.width / 2, height: view.frame.height / 3 + 10)
